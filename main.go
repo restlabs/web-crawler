@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"github.com/go-redis/redis/v8"
 	"github.com/we-are-discussing-rest/web-crawler/cmd/server"
 	"github.com/we-are-discussing-rest/web-crawler/internal/logger"
 	"github.com/we-are-discussing-rest/web-crawler/internal/repository"
@@ -12,7 +14,11 @@ import (
 
 func main() {
 	l := logger.NewLogger()
-	r := repository.NewRedisRepo()
+	r := repository.NewRedisRepo(context.Background(), l, &redis.Options{
+		Addr:     os.Getenv("REDIS_HOST"),
+		Username: os.Getenv("REDIS_USER"),
+		Password: os.Getenv("REDIS_PW"),
+	})
 	s := server.NewServer(r, l)
 
 	l.Info("listening", "PORT", os.Getenv("PORT"))
