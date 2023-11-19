@@ -1,0 +1,17 @@
+name: Go
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      PORT: "8080"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go for tests
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21.x'
+      - name: Run tests
+        working-directory: ./tests/
+        run: go test
