@@ -9,7 +9,6 @@ import (
 )
 
 type RedisRepo struct {
-	Repository
 	*redis.Client
 	*logger.Logger
 }
