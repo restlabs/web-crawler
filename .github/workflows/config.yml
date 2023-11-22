@@ -15,3 +15,6 @@ jobs:
       - name: Run tests
         working-directory: ./tests/
         run: go test
+      - name: Run worker tests
+        working-directory: ./workers/tests/
+        run: go test
