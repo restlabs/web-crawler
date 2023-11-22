@@ -7,6 +7,7 @@ import (
 	"github.com/we-are-discussing-rest/web-crawler/cmd/server"
 	"github.com/we-are-discussing-rest/web-crawler/internal/logger"
 	"github.com/we-are-discussing-rest/web-crawler/internal/repository"
+	"github.com/we-are-discussing-rest/web-crawler/internal/utils"
 	"log"
 	"net/http"
 	"os"
@@ -14,11 +15,14 @@ import (
 
 func main() {
 	l := logger.NewLogger()
-	r := repository.NewRedisRepo(context.Background(), l, &redis.Options{
-		Addr:     os.Getenv("REDIS_HOST"),
-		Username: os.Getenv("REDIS_USER"),
-		Password: os.Getenv("REDIS_PW"),
+
+	r := repository.NewRedisRepo(l, &redis.Options{
+		Addr:     utils.Lookup("REDIS_HOST", "localhost:6379"),
+		Username: utils.Lookup("REDIS_USER", ""),
+		Password: utils.Lookup("REDIS_PW", ""),
 	})
+	r.CheckConnection(context.Background())
+
 	s := server.NewServer(r, l)
 
 	l.Info("listening", "PORT", os.Getenv("PORT"))

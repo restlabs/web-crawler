@@ -11,12 +11,12 @@ func TrimURL(inputURL string) (string, error) {
 		return "", err
 	}
 
-	hostWithoutScheme := strings.TrimPrefix(parsedURL.Host, "www.")
-	if hostWithoutScheme == "" {
-		hostWithoutScheme = parsedURL.Host
+	trimmedHost := strings.TrimPrefix(parsedURL.Host, "www.")
+	if trimmedHost == "" {
+		trimmedHost = parsedURL.Host
 	}
 
-	hostParts := strings.Split(hostWithoutScheme, ".")
+	hostParts := strings.Split(trimmedHost, ".")
 	host := hostParts[len(hostParts)-2]
 
 	return host, nil

@@ -57,8 +57,7 @@ func (s *Server) handleHealthcheck(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) seedHandler(w http.ResponseWriter, r *http.Request) {
 	var seedUrl SeedUrlsDto
-	err := json.NewDecoder(r.Body).Decode(&seedUrl)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&seedUrl); err != nil {
 		s.Logger.Error("error parsing body", "error", err)
 		fmt.Fprintf(w, "%v", err)
 		w.WriteHeader(http.StatusBadRequest)
@@ -66,10 +65,9 @@ func (s *Server) seedHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, v := range seedUrl.SeedUrls {
-		insertErr := s.store.Insert(v)
-		if insertErr != nil {
+		if insertErr := s.store.Insert(v); insertErr != nil {
 			s.Logger.Error("error seeding urls", "error", insertErr, "url", v)
-			fmt.Fprintf(w, "%v", err)
+			fmt.Fprintf(w, "%v", insertErr)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}

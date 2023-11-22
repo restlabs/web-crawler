@@ -13,7 +13,7 @@ type RedisRepo struct {
 	*logger.Logger
 }
 
-func NewRedisRepo(ctx context.Context, logger *logger.Logger, opts *redis.Options) *RedisRepo {
+func NewRedisRepo(logger *logger.Logger, opts *redis.Options) *RedisRepo {
 	rr := new(RedisRepo)
 
 	rr.Logger = logger
@@ -22,14 +22,17 @@ func NewRedisRepo(ctx context.Context, logger *logger.Logger, opts *redis.Option
 	rdb := redis.NewClient(opts)
 	rr.Client = rdb
 
-	_, err := rr.Client.Ping(ctx).Result()
+	return rr
+}
+
+func (r *RedisRepo) CheckConnection(ctx context.Context) {
+	_, err := r.Client.Ping(ctx).Result()
 	if err != nil {
-		logger.Error("error connecting to redis", "error", err)
+		r.Logger.Error("error connecting to redis", "error", err)
 		panic(err)
 	}
 
-	rr.Logger.Info("connected to redis")
-	return rr
+	r.Logger.Info("connected to redis")
 }
 
 func (r *RedisRepo) Insert(data string) error {
