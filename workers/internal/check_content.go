@@ -12,8 +12,7 @@ var ContentErrorDuplicateHash = errors.New("duplicate value")
 
 func CheckContent(store repository.Repository, content string) error {
 	hash := md5.New()
-	_, err := io.WriteString(hash, content)
-	if err != nil {
+	if _, err := io.WriteString(hash, content); err != nil {
 		return fmt.Errorf("error writing hash %v", err)
 	}
 
