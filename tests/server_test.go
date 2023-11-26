@@ -3,8 +3,8 @@ package tests
 import (
 	"fmt"
 	"github.com/we-are-discussing-rest/web-crawler/cmd/server"
-	"github.com/we-are-discussing-rest/web-crawler/internal/logger"
-	"github.com/we-are-discussing-rest/web-crawler/internal/utils"
+	"github.com/we-are-discussing-rest/web-crawler/logger"
+	"github.com/we-are-discussing-rest/web-crawler/utils"
 	"net/http"
 	"net/http/httptest"
 	"reflect"

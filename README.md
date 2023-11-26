@@ -79,3 +79,9 @@ interface SeenContentModel {
 }
 ```
 
+### Frontier
+Queue router and queue selector will be contained within a module. Queue router will receive links from crawlers
+and enqueue those links into Redis Queue. The queue selector will work on a pub/sub mechanism. 
+
+Queues have their own crawler -> crawler depth will be set by env var when program runs -> when a new 
+queue is added the queue selector module will have a subscriber that spins up a new worker/crawler

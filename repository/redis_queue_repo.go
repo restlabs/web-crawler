@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
-	"github.com/we-are-discussing-rest/web-crawler/internal/logger"
-	"github.com/we-are-discussing-rest/web-crawler/internal/utils"
+	"github.com/we-are-discussing-rest/web-crawler/logger"
+	"github.com/we-are-discussing-rest/web-crawler/utils"
 )
 
 type RedisRepo struct {
