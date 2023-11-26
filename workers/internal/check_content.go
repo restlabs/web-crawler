@@ -1,28 +1,38 @@
 package internal
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
-	"fmt"
-	"github.com/we-are-discussing-rest/web-crawler/internal/repository"
-	"io"
+	"github.com/we-are-discussing-rest/web-crawler/workers/repository"
 )
 
 var ContentErrorDuplicateHash = errors.New("duplicate value")
 
 func CheckContent(store repository.Repository, content string) error {
-	hash := md5.New()
-	if _, err := io.WriteString(hash, content); err != nil {
-		return fmt.Errorf("error writing hash %v", err)
+	hash := sha256.New()
+
+	_, err := hash.Write([]byte(content))
+	if err != nil {
+		return err
 	}
 
-	value, err := store.Get(fmt.Sprintf("%x", hash))
+	hashBytes := hash.Sum(nil)
+
+	hashString := hex.EncodeToString(hashBytes)
+
+	value, err := store.Get(hashString)
 	if err != nil {
 		return err
 	}
 
 	if value != "" {
 		return ContentErrorDuplicateHash
+	}
+
+	err = store.Insert(hashString)
+	if err != nil {
+		return err
 	}
 
 	return nil

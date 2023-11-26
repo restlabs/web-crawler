@@ -1,8 +1,13 @@
 package internal
 
 import (
+	"errors"
 	"fmt"
 	"net"
+)
+
+var (
+	ErrorIpCannotBeResolved = errors.New("invalid URL no IPs to resolve")
 )
 
 func ResolveDns(host string) error {
@@ -12,7 +17,7 @@ func ResolveDns(host string) error {
 	}
 
 	if len(ips) == 0 {
-		return fmt.Errorf("invalid host, no IPs found for %v", host)
+		return ErrorIpCannotBeResolved
 	}
 
 	return nil

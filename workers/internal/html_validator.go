@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ParseRawHtmlContent(rawHtml string) error {
+func ValidateHtmlContent(rawHtml string) error {
 	r := strings.NewReader(rawHtml)
 	d := xml.NewDecoder(r)
 
