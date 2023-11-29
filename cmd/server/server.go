@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/we-are-discussing-rest/web-crawler/internal/logger"
-	"github.com/we-are-discussing-rest/web-crawler/internal/repository"
+	"github.com/we-are-discussing-rest/web-crawler/logger"
+	"github.com/we-are-discussing-rest/web-crawler/repository"
 	"net/http"
 )
 

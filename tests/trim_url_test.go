@@ -1,7 +1,7 @@
 package tests
 
 import (
-	"github.com/we-are-discussing-rest/web-crawler/internal/utils"
+	"github.com/we-are-discussing-rest/web-crawler/utils"
 	"testing"
 )
 
