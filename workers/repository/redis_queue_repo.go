@@ -2,10 +2,15 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/we-are-discussing-rest/web-crawler/workers/utils"
 	"log/slog"
+)
+
+var (
+	NoMessageError = errors.New("no messages in the queue")
 )
 
 type RedisRepo struct {
@@ -53,5 +58,28 @@ func (r *RedisRepo) Remove(data string) error {
 }
 
 func (r *RedisRepo) Get(data string) (string, error) {
-	return "", nil
+	r.logger.Info("dequeue", "key", data)
+	val := r.Client.RPop(r.Context(), data)
+	if val.Val() == "" {
+		return "", NoMessageError
+	}
+
+	return val.Val(), nil
+}
+
+func (r *RedisRepo) GetAllMessages(data string, ctx context.Context) ([]string, error) {
+	r.logger.Info("getting queue len", "key", data)
+	ql := r.Client.LLen(ctx, data)
+	val := r.Client.RPopCount(ctx, data, int(ql.Val()))
+	if len(val.Val()) == 0 {
+		return nil, NoMessageError
+	}
+
+	return val.Val(), nil
+}
+
+func (r *RedisRepo) GetAllKeys(ctx context.Context) []string {
+	ret := r.Client.Keys(ctx, "*")
+
+	return ret.Val()
 }

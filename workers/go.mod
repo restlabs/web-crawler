@@ -4,8 +4,8 @@ go 1.21.3
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/we-are-discussing-rest/web-crawler v0.0.0-20231119205029-2f3772a5f371
 	golang.org/x/net v0.18.0
+	modernc.org/sqlite v1.27.0
 )
 
 require (
@@ -25,7 +25,6 @@ require (
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.7.2 // indirect
 	modernc.org/opt v0.1.3 // indirect
-	modernc.org/sqlite v1.27.0 // indirect
 	modernc.org/strutil v1.1.3 // indirect
 	modernc.org/token v1.0.1 // indirect
 )
@@ -33,5 +32,5 @@ require (
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/we-are-discussing-rest/pool-party v0.1.2
+	github.com/we-are-discussing-rest/pool-party v0.1.3
 )
